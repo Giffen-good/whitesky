@@ -1,0 +1,61 @@
+{%- comment -%}
+  This is a required section for the Shopify Theme Store.
+  It is available when you add "Rich text" section on the Theme Editor.
+
+  Theme Store required settings
+  - Heading: title of the rich text section
+  - Text: description of the rich text section
+{%- endcomment -%}
+
+<script type="text/javascript" src="{{ 'marquee.js' | asset_url }}"></script>
+
+<section data-section-id="{{ section.id }}"
+class=" w100 dib wsnw pt2 pt1 ttu oh marquee">
+  {%- if section.settings.title != blank -%}
+    <div class="js-marquee">
+      <span class="pl1">{{ section.settings.title | escape }}</span>
+      <span class="pl1">{{ section.settings.title | escape }}</span>
+      <span class="pl1">{{ section.settings.title | escape }}</span>
+      <span class="pl1">{{ section.settings.title | escape }}</span>
+      <span class="pl1">{{ section.settings.title | escape }}</span>
+
+    </div>
+<div class="js-marquee">
+      <span class="pl1">{{ section.settings.title | escape }}</span>
+      <span class="pl1">{{ section.settings.title | escape }}</span>
+      <span class="pl1">{{ section.settings.title | escape }}</span>
+      <span class="pl1">{{ section.settings.title | escape }}</span>
+      <span class="pl1">{{ section.settings.title | escape }}</span>
+      
+    </div>
+
+  {%- endif -%}
+</section>
+<script>
+  $(function(){
+    $('.marquee').marquee({
+      duplicated:true,
+      gap:0,
+      speed:15,
+      startVisible:true
+    });    
+  });
+</script>
+{% schema %}
+  {
+    "name": "Rich text",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Talk about your brand"
+      }
+     
+    ],
+    "presets": [{
+        "name": "Rich text",
+        "category": "Text"
+    }]
+  }
+{% endschema %}

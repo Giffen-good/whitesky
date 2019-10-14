@@ -1,0 +1,62 @@
+{% if section.settings.image != blank %}
+<section class="psr oh vh90 banner-image ripe-for-js cr">
+	{% if section.settings.button_link != blank %}
+	<a href="{{ section.settings.button_link }}" class="psa c ofa h100 w100 zoomie xy bgsc bgpc  h100" style="background-image:url({{ section.settings.image | img_url:'3000x3000'}})">
+	
+	{% else %}
+		<div class="psa c ofa h100 w100 zoomie xy bgsc bgpc  h100" style="background-image:url({{ section.settings.image | img_url:'3000x3000'}})">
+	{% endif %}
+	<hgroup class="c compens psa z2 pen tac cw btn  bl" href="{{ section.settings.button_link }}">
+		<h2>{{ section.settings.header }}</h2>
+		<h4 class="ttu underline">{{ section.settings.button_text }}</h4>
+	</hgroup>
+	{% if section.settings.button_link != blank %}
+		</a>
+	{% else %}
+		</div>
+	{% endif %}
+</section>
+<script>
+	(function() {
+		if ( document.querySelector('#MainContent > div:first-child > .banner-image')) {
+			document.body.classList.add('flush');
+		}
+		})();
+</script>
+{% endif %}
+{% schema %}
+	{
+		"name":"Banner with button",
+		"class": "banner vw100",
+		"settings": [
+			{
+				"type":"image_picker",
+				"id":"image",
+				"label":"Banner Image"
+			},
+			{
+				"type":"text",
+				"id":"header",
+				"label":"header"
+			},
+			{
+				"type":"text",
+				"id":"button_text",
+				"label":"sub text"
+			},
+			{
+				"type":"url",
+				"id":"button_link",
+				"label":"Button Url"
+			}
+
+		
+		],
+		"presets": [
+			{
+				"name": "Banner Image",
+				"category": "Image"
+			}
+		]
+	}
+{% endschema %}

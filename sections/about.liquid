@@ -1,0 +1,141 @@
+
+{% for section in section.blocks %}
+    {% if section.settings.fsImage != blank %}
+      <section class="psr oh vh80 banner-image ripe-for-js cr">
+        <div  class="psa c ofa h100 w100 zoomie xy bgsc bgpc  h100" style="background-image:url({{ section.settings.fsImage | img_url:'3000x3000'}})">
+          
+          <hgroup class="c compens psa z2  tac cw btn  bl">
+      {% if section.settings.fsHeading != blank %}
+
+              <h2>{{ section.settings.fsHeading }}</h2>
+      {% endif %}
+      {% if section.settings.fsBody != blank %}
+
+              <p>{{ section.settings.fsBody }}</p>
+      {% endif %}
+
+            <div>
+      {% if section.settings.fsLinkText != blank %}
+                <a href="{{ section.settings.fsLink }}" class="ttu cw underline {% if section.settings.fsLinkText_2 != blank %} mr1  {% endif %}">{{ section.settings.fsLinkText }}</a>
+      {% endif %}
+    {% if section.settings.fsLinkText_2 != blank %}
+              <a href="{{ section.settings.fsLink_2 }}" class="ttu cw underline ml1">{{ section.settings.fsLinkText_2 }}</a>
+    {% endif %}
+            </div>
+          </hgroup>
+            
+        </div>
+      </section>
+    {% endif %}
+    {% if section.settings.tcImage != blank %}
+      <section sm="xw" class="x w100 vh80 twoUp">
+        <img sm="" class="x1050 ofc p1  {% if section.settings.alignRight != blank %} xo2 pl0 {% else %} pr0 {% endif %}" src="{{section.settings.tcImage | img_url:'1600x900'}}" />
+    {% endif %}
+      {% if section.settings.tcHeading != blank or section.settings.tcBody != blank %}
+
+        <div sm="" class="x1050 xac x {% if section.settings.alignRight != blank %} xo1 {% endif %}">
+          
+          <div sm="pt0 pb2" class="pl1 pr1 w100">
+      {% if section.settings.tcHeading != blank %}
+          <h2 class="tac">{{ section.settings.tcHeading }}</h2>
+          <p>{{ section.settings.tcBody }}</p>
+          <div class="tac"><a class="underline" href="{{ section.settings.tcLink }}">{{ section.settings.tcURLtext }}</a></div>
+      {% endif %}
+         </div>
+
+        </div>
+      {% endif %}
+      </section>
+      {% if section.settings.fwHeading != blank or section.settings.fwBody != blank %}
+        <section sm="pt2 pb2" class="tac pt4 pb4 pl1 pr1">
+          <h2>{{ section.settings.fwHeading }}</h2>
+          <p class="pt1">{{ section.settings.fwBody}}</p>
+        </section>
+      {% endif %}
+{% endfor %}
+
+{% schema %}
+  {
+    "blocks": [
+      {
+        "type":"collection",
+        "name":"About Section Repeater",
+        "settings":[
+             {
+                  "type": "image_picker",
+                  "id": "fsImage",
+                  "label": "(img w/ txt overlay section) Image"
+              },
+              {
+                "type": "text",
+                "id": "fsHeading",
+                "label": "(img w/ txt overlay section) Heading"
+              },
+              {
+                "type": "textarea",
+                "id": "fsBody",
+                "label": "(img w/ txt overlay section) Body"
+              },  {
+                "type": "url",
+                "id": "fsLink",
+                "label": "(img w/ txt overlay section) Link"
+              }, 
+              {
+                "type": "text",
+                "id": "fsLinkText",
+                "label": "(img w/ txt overlay section) Link Text"
+              },
+                {
+                "type": "url",
+                "id": "fsLink_2",
+                "label": "(img w/ txt overlay section) Link"
+              },{
+                "type": "text",
+                "id": "fsLinkText_2",
+                "label": "(img w/ txt overlay section) Link 2 Text"
+              },{
+                  "type":"image_picker",
+                  "id":"tcImage",
+                  "label":"(two column section) image"
+                },
+                {
+                "type": "text",
+                "id": "tcHeading",
+                "label": "(two column section) Heading"
+              },
+              {
+                "type": "textarea",
+                "id": "tcBody",
+                "label": "(two column section) Body"
+              },
+              {
+                "type": "text",
+                "id": "tcURLtext",
+                "label": "(two column section) Link Text"
+              },
+              {
+                "type": "url",
+                "id": "tcLink",
+                "label": "(two column section) Link"
+              },
+              {
+                "type": "checkbox",
+                "id": "alignRight",
+                "label": "(two column section) Align Image right"
+              },
+              {
+                "type": "text",
+                "id": "fwHeading",
+                "label": "(text only section) Heading"
+              },
+              {
+                "type": "textarea",
+                "id": "fwBody",
+                "label": "(text only section) body"
+              }
+        ]
+      }
+    ]
+  }
+
+{% endschema %}

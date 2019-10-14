@@ -1,0 +1,138 @@
+
+{% paginate collection.products by 9 %}
+{%- assign image_object = collection.image | img_url:'2100x800'-%}
+{% if collection.image != blank %}
+  <section role="banner" class="psr vw100 oh vh90 banner-image ripe-for-js tac cr">
+    <img class="c psa w100 h100 ofc" src="{{ image_object }}" />
+    <div class="psa c"><h1>{{ collection.title }}</h1>
+    {% if collection.description != blank %}
+      <div class="rte">
+        {{ collection.description }}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if collection.all_tags.size > 0 %}
+      
+    {% endif %}
+  </section>
+  <script>
+      document.body.classList.add('flush');
+  </script>
+  {% endif %}
+
+
+
+<div id="filterNsort" class=" pl1 pr1 mb0 x w100 xjb">
+
+
+  <ul class="subnav tal clearfix db w100 pl0 mb0-5 mt1-5 x xjs ttu"> 
+    <li {% unless current_tags %} class="active"{% endunless %}>
+      {% if collection.handle %}
+      <span class="bullet"></span><a href="/collections/{{ collection.handle }}{% if collection.sort_by %}?sort_by={{ collection.sort_by }}{% endif %}">All</a>
+      {% elsif collection.current_type %}
+       <span class="bullet"></span><a href="{{ collection.current_type | url_for_type | sort_by: collection.sort_by }}">All</a>
+      {% elsif collection.current_vendor %}
+       <span class="bullet"></span><a href="{{ collection.current_vendor | url_for_vendor | sort_by: collection.sort_by }}">All</a>
+      {% endif %}
+    </li>
+    {% for tag in collection.all_tags %}
+    {% unless tag =='size-guide-a' or tag =='size-guide-b' or tag =='size-guide-c' or tag =='size-guide-d' or tag == 'one' or tag == 'two' or tag == 'three' or tag == 'four' or tag == 'fs' %} {% comment %} Special Tags {% endcomment %}
+      {% if current_tags contains tag %}
+      <li class="active">
+        <span class="bullet"></span>{{ tag | link_to_remove_tag: tag }}
+      </li>
+      {% else %}
+      <li>
+        <span class="bullet"></span>{{ tag | link_to_tag: tag }}
+      </li>
+      {% endif %}
+    {% endunless %}
+    {% endfor %}
+  </ul>
+
+
+
+
+  <div id="sorting-hat">
+    <div id="sort-label" class="psa mb0-5 " for="sort-by" style="background:url({{ 'simple-down-arrow.png' | asset_url }}) 90% / 15% no-repeat">Sort by</div> 
+    <select data-dropup-auto="false" id="sort-by">
+      <option value="manual">Featured</option>
+      <option value="price-ascending">Price: Low to High</option>
+      <option value="price-descending">Price: High to Low</option>
+      <option value="title-ascending">A-Z</option>
+      <option value="title-descending">Z-A</option>
+      <option value="created-ascending">Oldest to Newest</option>
+      <option value="created-descending">Newest to Oldest</option>
+      <option value="best-selling">Best Selling</option>
+    </select>
+  </div>
+  <script>
+  Shopify.queryParams = {};
+  if (location.search.length) {
+    for (var aKeyValue, i = 0, aCouples = location.search.substr(1).split('&'); i < aCouples.length; i++) {
+      aKeyValue = aCouples[i].split('=');
+      if (aKeyValue.length > 1) {
+        Shopify.queryParams[decodeURIComponent(aKeyValue[0])] = decodeURIComponent(aKeyValue[1]);
+      }
+    }
+  }
+  jQuery('#sort-by')
+    .val('{{ collection.sort_by | default: collection.default_sort_by | escape }}')
+    .bind('change', function() {
+      Shopify.queryParams.sort_by = jQuery(this).val();
+      location.search = jQuery.param(Shopify.queryParams).replace(/\+/g, '%20');
+    });
+    $(document).ready(function() {
+      var dropdown = $("#sort-by");
+      var size = $('#sort-by option').size();
+      if (size != dropdown.prop('size')) {
+          dropdown.prop('size', size);
+      } else {
+          dropdown.prop('size', 1);
+      }
+      document.getElementById('sort-by').style.marginBottom = '-' + (document.getElementById('sort-by').clientHeight) + 'px';
+      window.addEventListener('resize', function() {
+        document.getElementById('sort-by').style.marginBottom = '-' + (document.getElementById('sort-by').clientHeight) + 'px';
+
+      })
+    });
+  </script>
+
+
+
+
+
+</div>
+  <div class="x xw xjs w100 collection">
+    {% for product in collection.products %}
+      {% include 'product-card' %}
+    {% else %}
+      {% if collection.handle == 'all' and collection.all_vendors.size == 0 and collection.all_types.size == 0 %}
+        {% for i in (1..8) %}
+          <a href="#">
+            {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+            {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--small' }}
+          </a>
+
+          <p>
+            <a href="#">{{ 'homepage.onboarding.product_title' | t }}</a>
+          </p>
+
+          <p>
+            {{ 1999 | money }}
+          </p>
+        {% endfor %}
+      {% else %}
+        <div class="tac pt2 pb2 w100"><p>{{ 'collections.general.no_matches' | t }}</p></div>
+      {% endif %}
+
+    {% endfor %}
+  </div>
+
+  {% if paginate.pages > 1 %}
+    {% include 'pagination' %}
+  {% endif %}
+{% endpaginate %}
+
+

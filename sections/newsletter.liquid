@@ -1,0 +1,43 @@
+{%- comment -%}
+  This is a required section for the Shopify Theme Store.
+  It is available when you add "Newsletter" section on the Theme Editor.
+
+  Theme Store required settings
+  - Heading: title of the newsletter section
+  - Subheading: description of the newsletter section
+{%- endcomment -%}
+<section>
+ <form action="https://test.us16.list-manage.com/subscribe/post-json?u=37cf957e30bf22bff508ea6c6&amp;id=aeeb24162f&c=?" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate"  novalidate>
+      <label for="mce-EMAIL" id="mceElabel" class="pr1">{{ section.settings.subheading }}</label>
+      <div class="" id="newsletterBox">
+        <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+        <div id="mce-responses" class="clear">
+          <div class="response" id="mce-error-response" style="display:none"></div>
+          <div class="response" id="mce-success-response" style="display:none"></div>
+        </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+          <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_37cf957e30bf22bff508ea6c6_aeeb24162f" tabindex="-1" value=""></div>
+          <div  class="clear dib"><input type="submit" value="" name="subscribe" id="mc-embedded-subscribe" class="button" style="background-image:url({{'small-arrow.png' | asset_url }})" ></div>
+      </div>
+      </form>
+      <div id="thankYou" class="c9"></div> 
+</section>
+
+{% schema %}
+  {
+    "name": "Newsletter",
+    "class": "tal m0a",
+    "settings": [
+    
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Subheading",
+        "default": "A short sentence describing what someone will receive by subscribing"
+      }
+    ],
+    "presets": [{
+      "name": "Newsletter",
+      "category": "Promotional"
+    }]
+  }
+{% endschema %}
